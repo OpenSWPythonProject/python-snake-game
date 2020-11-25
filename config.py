@@ -4,8 +4,8 @@ class Config():
   MENU_FPS = 60
 
   # 화면크기
-  WINDOW_WIDTH = 640
-  WINDOW_HEIGHT = 480
+  WINDOW_WIDTH = 1200
+  WINDOW_HEIGHT = 700
   CELLSIZE = 20 # 블록 크기
   assert WINDOW_WIDTH % CELLSIZE == 0, "Window width must be a multiple of cell size."
   assert WINDOW_HEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell size."
@@ -17,9 +17,13 @@ class Config():
   BLACK = (0, 0, 0)
   RED = (255, 0, 0)
   GREEN = (0, 255, 0)
+  ORANGE = (255, 94, 19)
+  PURPLE = (128, 0, 128)
   DARKRED = (139, 0, 0)
   DARKGREEN = (0, 155, 0)
   DARKGRAY = (40, 40, 40)
+  DARKORANGE = (207, 83, 0)
+  DARKPURPLE = (102, 0, 102)
   BG_COLOR = BLACK
 
 

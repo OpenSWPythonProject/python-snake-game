@@ -41,8 +41,8 @@ class Button:
 class Menu:
     def __init__(self):
         self.title_size = 100
-        self.title_color = Config.BLACK
-        self.title_pos = (Config.WINDOW_WIDTH - self.title_size * 1.6, 200)
+        self.title_color = [255, 255,255]
+        self.title_pos = (Config.WINDOW_WIDTH - self.title_size * 7.8, 200)
         self.timer = 0
         self.running = True
         self.btn_width = 250
@@ -78,7 +78,7 @@ class Menu:
                 self.show_controls = True
 
     def render(self):
-        self.message("Welcome to", 40, (255, 255, 255), (Config.WINDOW_WIDTH / 2 - 40 * 2.1, self.title_pos[1] - 50))
+        self.message("Welcome to", 40, (0, 0, 0), (Config.WINDOW_WIDTH / 2 - 40 * 2.1, self.title_pos[1] - 50))
         self.message("Python.io", self.title_size, self.title_color, self.title_pos)
 
         self.play_button.render()
