@@ -41,7 +41,7 @@ class Button:
 class Menu:
     def __init__(self):
         self.title_size = 100
-        self.title_color = Config.BLACK
+        self.title_color = [255, 255, 255]
         self.title_pos = (Config.WINDOW_WIDTH - self.title_size * 1.6, 200)
         self.timer = 0
         self.running = True

@@ -4,13 +4,15 @@ class Config():
   MENU_FPS = 60
 
   # 화면크기
-  WINDOW_WIDTH = 640
-  WINDOW_HEIGHT = 480
-  CELLSIZE = 20 # 블록 크기
+  # WINDOW_WIDTH = 640
+  WINDOW_WIDTH = 1200
+  # WINDOW_HEIGHT = 480
+  WINDOW_HEIGHT = 700
+  CELLSIZE = 20  # 블록 크기
   assert WINDOW_WIDTH % CELLSIZE == 0, "Window width must be a multiple of cell size."
   assert WINDOW_HEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell size."
-  CELLWIDTH = int(WINDOW_WIDTH / CELLSIZE) # 가로 블록 갯수
-  CELLHEIGHT = int(WINDOW_HEIGHT / CELLSIZE) # 새로 블록 갯수
+  CELLWIDTH = int(WINDOW_WIDTH / CELLSIZE)  # 가로 블록 갯수
+  CELLHEIGHT = int(WINDOW_HEIGHT / CELLSIZE)  # 새로 블록 갯수
 
   # Colors
   WHITE = (255, 255, 255)
@@ -22,5 +24,7 @@ class Config():
   DARKGRAY = (40, 40, 40)
   BG_COLOR = BLACK
 
+  # file
+  HS_FILE = 'highscore_txt'
 
 screen = pygame.display.set_mode((Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT))
