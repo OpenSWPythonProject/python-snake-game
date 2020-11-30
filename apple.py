@@ -10,6 +10,7 @@ class Apple():
     self.color = Config.RED
     self.doubleNum = 0
     self.deleteNum = 0
+    self.doubleDeleteNum = 0
 
   # 사과 생성 메소드
   def setNewLocation(self, snake):
@@ -21,20 +22,32 @@ class Apple():
       if(self.x == snake.wormCoords[i]['x'] and self.y == snake.wormCoords[i]['y']):
         self.setNewLocation(snake)
 
+  # 사과 아이템의 종류에 따라 색상을 다르게 설정
   def setAppleColor(self, color):
     self.color = color
-
+  # 현재 보이는 사과의 색상을 반환
   def getAppleColor(self):
     return self.color
 
-  def setAppleNum(self): #2/5 확률 0~4중 1,3이랑 같을시
-    self.doubleNum = random.randint(0, 5)
-
+  # DoubleApple 아이템이 생성될 확률을 지정
+  def setAppleNum(self): #1/3 확률 0~2중 1이랑 같을시
+    self.doubleNum = random.randint(0, 3)
+  # DoubleApple 아이템의 확률 수를 반환
   def getAppleNum(self):
     return self.doubleNum
 
+  # DeleteApple 아이템이 생성될 확률을 지정
   def setAppleDNum(self): #1/3 확률 0~2중 1이랑 같을시
     self.deleteNum = random.randint(0, 3)
-
+  # DeleteApple 아이템의 확률 수를 반환
   def getAppleDNum(self):
     return self.deleteNum
+
+ # DoubleDeleteApple 아이템이 생성될 확률을 지정
+  def setAppleDoubleDNum(self): #1/3 확률 0~2중 1이랑 같을시
+    self.doubleDeleteNum = random.randint(0, 3)
+  # DoubleDeleteApple 아이템의 확률 수를 반환
+  def getAppleDoubleDNum(self):
+    return self.doubleDeleteNum
+
+  #사과의 확률을 바꾸고 싶다면 여기서 각 랜덤 값의 마지막 값을 바꿔주면 됨

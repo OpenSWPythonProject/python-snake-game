@@ -18,6 +18,7 @@ class Game():
     pygame.display.set_caption('Snake') #윈도우 창에 게임 이름 표시
     self.apple = Apple()  # 아이템 객체 할당
     self.snake = Snake()  # 뱀 객체 할당
+    self.round = 0
 
   def drawGrid(self): # 격자 그리기 매소드
     # draw vertical lines
@@ -38,6 +39,7 @@ class Game():
       wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
       pygame.draw.rect(self.screen, Config.GREEN, wormInnerSegmentRect)
 
+  #기본적인 사과 (먹으면 몸길이 1 증가)
   def drawApple(self):
     # print("기본 사과 그리기")
     x = self.apple.x * Config.CELLSIZE
@@ -48,6 +50,7 @@ class Game():
     appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
     pygame.draw.rect(self.screen, Config.RED, appleInnerRect)
 
+  #먹으면 몸길이가 2개가 늘어나는 사과
   def drawDoubleApple(self):
     # print("두배 사과 그리기")
     x = self.apple.x * Config.CELLSIZE
@@ -58,6 +61,7 @@ class Game():
     appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
     pygame.draw.rect(self.screen, Config.ORANGE, appleInnerRect)
 
+  #먹으면 몸길이가 1개 줄어드는 사과(사용자에겐 이득이 되는 아이템)
   def drawDeleteApple(self):
     # print("기본 사과 그리기")
     x = self.apple.x * Config.CELLSIZE
@@ -68,33 +72,70 @@ class Game():
     appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
     pygame.draw.rect(self.screen, Config.PURPLE, appleInnerRect)
 
+  #먹으면 몸길이가 2개 줄어드는 사과(사용자에겐 이득이 되는 아이템2)
+  def drawDoubleDeleteApple(self):
+    # print("기본 사과 그리기")
+    x = self.apple.x * Config.CELLSIZE
+    y = self.apple.y * Config.CELLSIZE
+    self.apple.setAppleColor(Config.GOLD)
+    appleRect = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
+    pygame.draw.rect(self.screen, Config.DARKGOLD, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
+    appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
+    pygame.draw.rect(self.screen, Config.GOLD, appleInnerRect)
+
+  # 점수를 화면에 표시해줌 
   def drawScore(self, score):
     scoreSurf = self.BASICFONT.render('Score: %s' % (score), True, Config.WHITE) # 윈도우 위에 새로운 표면에 텍스트 렌더 (텍스트, 안티얼라이싱, 색, 백그라운드)
     scoreRect = scoreSurf.get_rect() # 렌더된 텍스트의 사이즈와 오프셋 리턴
     scoreRect.topleft = (Config.WINDOW_WIDTH - 120, 10)
     self.screen.blit(scoreSurf, scoreRect)
 
+  # 점수에 따른 라운드를 화면상에 표시해주는 함수
+  def drawRound(self, score):
+    if(score >= 0 and score < 3):
+      self.round = 0
+    elif(score >= 3 and score <= 5):
+      self.round = 1
+    elif(score > 5 and score <= 8):
+      self.round = 2
+    else:
+      self.round = 3
+    roundSurf = self.BASICFONT.render('Round: %d' % (self.round), True, Config.WHITE) # 윈도우 위에 새로운 표면에 텍스트 렌더 (텍스트, 안티얼라이싱, 색, 백그라운드)
+    roundRect = roundSurf.get_rect() # 렌더된 텍스트의 사이즈와 오프셋 리턴
+    roundRect.topleft = (Config.WINDOW_WIDTH - 1180, 10)
+    self.screen.blit(roundSurf, roundRect)
+
   def draw(self): # 렌더링 메소드
     self.screen.fill(Config.BG_COLOR) #배경색
     # in here well draw snake, grid, apple, scroe
     self.drawGrid()
     self.drawWorm()
-    if(len(self.snake.wormCoords) - 3) >= 3 and (len(self.snake.wormCoords) - 3) <= 5:
+    if self.round == 0: # 0라운드일 땐 기본 아이템만
+      self.drawApple()
+    elif self.round == 1: # 1라운드일 땐 일반 사과와 doubleApple 아이템만
       if self.apple.getAppleNum() == 1:
         self.drawDoubleApple()
       else:
         self.drawApple()
-    elif(len(self.snake.wormCoords) - 3) > 5 and (len(self.snake.wormCoords) - 3) <= 8:
-      if self.apple.getAppleNum == 1:
+    elif self.round == 2: # 2라운드일 땐 일반 사과 + 더블 + deleteApple이 등장
+      if self.apple.getAppleNum() == 1:
         self.drawDoubleApple()
       elif self.apple.getAppleDNum() == 1:
         self.drawDeleteApple()
       else:
         self.drawApple()
-    else:
-      self.drawApple() 
+    else: # 3라운드 이상 부터는 전부 다 등장
+      if self.apple.getAppleNum() == 1:
+        self.drawDoubleApple()
+      elif self.apple.getAppleDNum() == 1:
+        self.drawDeleteApple()
+      elif self.apple.getAppleDoubleDNum() == 1:
+        self.drawDoubleDeleteApple()
+      else:
+        self.drawApple() 
     
     self.drawScore(len(self.snake.wormCoords) - 3) # 뱀 몸통 -3으로 점수계
+    self.drawRound(len(self.snake.wormCoords) - 3)
     pygame.display.update() # 윈도우의 부분적인 업데이트를 가능하게 하는 메소
     self.clock.tick(Config.FPS) # 시간 업데이트 매개변수: (프레임레이트) 단위 ms
 
@@ -128,13 +169,13 @@ class Game():
     del self.apple
     self.snake = Snake()
     self.apple = Apple()
-
+    self.round = 0
     return True
 
   def drawPressKeyMgs(self):
-    pressKeySurf = self.BASICFONT.render('Press a key UP to play again', True, Config.WHITE)
+    pressKeySurf = self.BASICFONT.render('Let\'s Play: Press a key / Exit: Press a esc', True, Config.WHITE)
     pressKeyRect = pressKeySurf.get_rect()
-    pressKeyRect.topleft = (Config.WINDOW_WIDTH - 250, Config.WINDOW_HEIGHT - 30)
+    pressKeyRect.topleft = (Config.WINDOW_WIDTH - 380, Config.WINDOW_HEIGHT - 30)
     self.screen.blit(pressKeySurf, pressKeyRect)
 
   def isGameOver(self):

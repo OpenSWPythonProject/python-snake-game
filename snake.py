@@ -26,26 +26,33 @@ class Snake():
   def update(self, apple):
     # check if snake has eaten an apply 뱀의 위치 업데이트 메소드
     if self.wormCoords[self.HEAD]['x'] == apple.x and self.wormCoords[self.HEAD]['y'] == apple.y:   #뱀의 머리의 x좌표와 y좌표와 사과의 x좌표와 y좌표가 같을 경우, 즉 머리가 사과를 먹었을 경우
-      if apple.getAppleColor().__eq__(Config.RED):
+      if apple.getAppleColor().__eq__(Config.RED): # 먹은 사과 아이템이 일반 사과일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
-      elif apple.getAppleColor().__eq__(Config.ORANGE):
+        self.DefaultUpdate()
+      elif apple.getAppleColor().__eq__(Config.ORANGE): # 먹은 사과 아이템이 더블 아이템일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
-        self.doubleUpdate(apple)
-        del self.wormCoords[-1]
-      else:
+        self.doubleUpdate(apple) # 몸길이를 2배 증가시켜주는 함수
+      elif apple.getAppleColor().__eq__(Config.PURPLE): # 먹은 사과 아이템이 delete 아이템일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
         self.deleteUpdate()
-        del self.wormCoords[-1]
+      else:
+        apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
+        apple.setAppleNum()
+        apple.setAppleDNum()
+        self.DoubledeleteUpdate()
     else:
-      del self.wormCoords[-1]  # remove worms tail segment # 뱀의 꼬리부분을 삭제
+      self.DefaultUpdate()
+      self.deleteUpdate()  # remove worms tail segment # 뱀의 꼬리부분을 삭제
 
-    # move the worm by adding a segment in the direction it is moving
+
+  def DefaultUpdate(self):
+        # move the worm by adding a segment in the direction it is moving
     #뱀의 움직임을 구현
     if self.direction == self.UP: # 키보드 위쪽을 눌렀을 시 원래머리 위쪽에 새로운 머리를 생성
       newHead = {'x': self.wormCoords[self.HEAD]['x'],
@@ -92,3 +99,8 @@ class Snake():
 
   def deleteUpdate(self):
     del self.wormCoords[-1]
+
+  def DoubledeleteUpdate(self):
+    del self.wormCoords[-1]
+    del self.wormCoords[-2]
+    
