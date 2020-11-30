@@ -47,57 +47,57 @@ class Game():
   #기본적인 사과 (먹으면 몸길이 1 증가)
   def drawApple(self):
     # print("기본 사과 그리기")
+    redApple = pygame.image.load('res/red.png')
+    redApple = pygame.transform.scale(redApple, (Config.CELLSIZE, Config.CELLSIZE))
+    rect = redApple.get_rect()
     x = self.apple.x * Config.CELLSIZE
     y = self.apple.y * Config.CELLSIZE
-    self.apple.setAppleColor(Config.RED)
-    appleRect = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-    pygame.draw.rect(self.screen, Config.DARKRED, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
-    appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
-    pygame.draw.rect(self.screen, Config.RED, appleInnerRect)
+    rect = rect.move((x, y))
+    screen.blit(redApple, rect)
+
+
 
   # 방해물 그리기.
   def drawWallApple(self):
+      poisonApple = pygame.image.load('res/poison.jpg')
+      poisonApple = pygame.transform.scale(poisonApple, (Config.CELLSIZE, Config.CELLSIZE))
+      rect = poisonApple.get_rect()
       for i in range(self.wallApple.walCnt):
           xx = self.wallApple.x[i] * Config.CELLSIZE
           yy = self.wallApple.y[i] * Config.CELLSIZE
-          wappleRect = pygame.Rect(xx, yy, Config.CELLSIZE, Config.CELLSIZE)  # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-          pygame.draw.rect(self.screen, Config.DARKRED, wappleRect)  # 파라미터: (윈도우객체, 색상, 사각형객체)
-          wappleInnerRect = pygame.Rect(xx + 4, yy + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8)  # 안쪽 사각형 생성
-          # 방해물 흰색으로 고정.
-          pygame.draw.rect(self.screen, Config.WHITE, wappleInnerRect)
+          rect = rect.move((xx, yy))
+          screen.blit(poisonApple, rect)
 
   #먹으면 몸길이가 2개가 늘어나는 사과
   def drawDoubleApple(self):
     # print("두배 사과 그리기")
+    goldApple = pygame.image.load('res/gold.png')
+    goldApple = pygame.transform.scale(goldApple, (Config.CELLSIZE, Config.CELLSIZE))
+    rect = goldApple.get_rect()
     x = self.apple.x * Config.CELLSIZE
     y = self.apple.y * Config.CELLSIZE
-    self.apple.setAppleColor(Config.ORANGE)
-    appleRect = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-    pygame.draw.rect(self.screen, Config.DARKORANGE, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
-    appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
-    pygame.draw.rect(self.screen, Config.ORANGE, appleInnerRect)
+    rect = rect.move((x, y))
+    screen.blit(goldApple, rect)
 
   #먹으면 몸길이가 1개 줄어드는 사과(사용자에겐 이득이 되는 아이템)
   def drawDeleteApple(self):
-    # print("기본 사과 그리기")
+      purpleApple = pygame.image.load('res/purple.png')
+      purpleApple = pygame.transform.scale(purpleApple, (Config.CELLSIZE, Config.CELLSIZE))
+      rect = purpleApple.get_rect()
     x = self.apple.x * Config.CELLSIZE
     y = self.apple.y * Config.CELLSIZE
-    self.apple.setAppleColor(Config.PURPLE)
-    appleRect = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-    pygame.draw.rect(self.screen, Config.DARKPURPLE, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
-    appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
-    pygame.draw.rect(self.screen, Config.PURPLE, appleInnerRect)
+      rect = rect.move((x, y))
+      screen.blit(purpleApple, rect)
 
   #먹으면 몸길이가 2개 줄어드는 사과(사용자에겐 이득이 되는 아이템2)
   def drawDoubleDeleteApple(self):
-    # print("기본 사과 그리기")
-    x = self.apple.x * Config.CELLSIZE
-    y = self.apple.y * Config.CELLSIZE
-    self.apple.setAppleColor(Config.GOLD)
-    appleRect = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-    pygame.draw.rect(self.screen, Config.DARKGOLD, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
-    appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
-    pygame.draw.rect(self.screen, Config.GOLD, appleInnerRect)
+      blueApple = pygame.image.load('res/blue.png')
+      blueApple = pygame.transform.scale(blueApple, (Config.CELLSIZE, Config.CELLSIZE))
+      rect = blueApple.get_rect()
+      x = self.apple.x * Config.CELLSIZE
+      y = self.apple.y * Config.CELLSIZE
+      rect = rect.move((x, y))
+      screen.blit(blueApple, rect)
 
   # 점수를 화면에 표시해줌 
   def drawScore(self, score):

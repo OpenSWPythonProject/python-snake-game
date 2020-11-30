@@ -41,8 +41,8 @@ class Button:
 class Menu:
     def __init__(self):
         self.title_size = 100
-        self.title_color = [255, 255,255]
-        self.title_pos = (Config.WINDOW_WIDTH - self.title_size * 7.8, 200)
+        self.title_color = [255, 255, 255]
+        self.title_height = 250
         self.timer = 0
         self.running = True
         self.btn_width = 250
@@ -55,10 +55,11 @@ class Menu:
         self.play_button.color = Config.LIGHTGREEN
         self.show_controls = False
 
-    def message(self, text, text_size, color, position):
+    def message(self, text, text_size, color, height):
         font = pygame.font.SysFont('Comic Sans MS', text_size)
         screen_text = font.render(text, True, color)
-        screen.blit(screen_text, position)
+        text_rect = screen_text.get_rect(center=(Config.WINDOW_WIDTH / 2, height))
+        screen.blit(screen_text, text_rect)
 
     def logic(self):
         self.timer += 1
@@ -78,8 +79,8 @@ class Menu:
                 self.show_controls = True
 
     def render(self):
-        self.message("Welcome to", 40, (0, 0, 0), (Config.WINDOW_WIDTH / 2 - 40 * 2.1, self.title_pos[1] - 50))
-        self.message("Python.io", self.title_size, self.title_color, self.title_pos)
+        self.message("Welcome to", self.title_size - 10, (0, 0, 0), self.title_height - 100)
+        self.message("Snake Game", self.title_size, self.title_color, self.title_height)
 
         self.play_button.render()
         self.controls_button.render()

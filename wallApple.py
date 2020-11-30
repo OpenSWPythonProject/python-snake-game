@@ -8,7 +8,7 @@ class WallApple():
     def __init__(self):
 
         # 방해물 갯수
-        self.walCnt = 3
+        self.walCnt = 10
         self.x = []
         self.y = []
 
