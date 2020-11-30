@@ -36,13 +36,14 @@ class Game():
                        (0, y), (Config.WINDOW_WIDTH, y))
 
   def drawWorm(self):
+      body = pygame.image.load('res/greenCircle.jpg')
+      body = pygame.transform.scale(body, (Config.CELLSIZE, Config.CELLSIZE))
+      rect = body.get_rect()
     for coord in self.snake.wormCoords: # 뱀 객체 리스
       x = coord['x'] * Config.CELLSIZE
       y = coord['y'] * Config.CELLSIZE
-      wormSegmentReact = pygame.Rect(x, y, Config.CELLSIZE, Config.CELLSIZE) # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
-      pygame.draw.rect(self.screen, Config.DARKGREEN, wormSegmentReact) # 파라미터: (윈도우객체, 색상, 사각형객체)
-      wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
-      pygame.draw.rect(self.screen, Config.GREEN, wormInnerSegmentRect)
+      rect = rect.move((x, y))
+      screen.blit(body, rect)
 
   #기본적인 사과 (먹으면 몸길이 1 증가)
   def drawApple(self):
@@ -84,8 +85,8 @@ class Game():
       purpleApple = pygame.image.load('res/purple.png')
       purpleApple = pygame.transform.scale(purpleApple, (Config.CELLSIZE, Config.CELLSIZE))
       rect = purpleApple.get_rect()
-    x = self.apple.x * Config.CELLSIZE
-    y = self.apple.y * Config.CELLSIZE
+      x = self.apple.x * Config.CELLSIZE
+      y = self.apple.y * Config.CELLSIZE
       rect = rect.move((x, y))
       screen.blit(purpleApple, rect)
 
