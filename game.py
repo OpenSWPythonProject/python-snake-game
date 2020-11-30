@@ -39,11 +39,11 @@ class Game():
       body = pygame.image.load('res/greenCircle.jpg')
       body = pygame.transform.scale(body, (Config.CELLSIZE, Config.CELLSIZE))
       rect = body.get_rect()
-    for coord in self.snake.wormCoords: # 뱀 객체 리스
-      x = coord['x'] * Config.CELLSIZE
-      y = coord['y'] * Config.CELLSIZE
-      rect = rect.move((x, y))
-      screen.blit(body, rect)
+      for coord in self.snake.wormCoords:  # 뱀 객체 리스
+          x = coord['x'] * Config.CELLSIZE
+          y = coord['y'] * Config.CELLSIZE
+          rect = rect.move((x, y))
+          screen.blit(body, rect)
 
   #기본적인 사과 (먹으면 몸길이 1 증가)
   def drawApple(self):
