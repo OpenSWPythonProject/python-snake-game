@@ -1,11 +1,11 @@
 import sys
 
 import pygame
-import random
 
 from apple import Apple
 from config import Config, screen
 from menu import Menu
+from pybutton import Control
 from snake import Snake
 
 
@@ -19,6 +19,9 @@ class Game():
     self.apple = Apple()  # 아이템 객체 할당
     self.snake = Snake()  # 뱀 객체 할당
     self.round = 0
+    self.highscore = 0
+    self.play_again = False
+    self.quit_game = False
 
   def drawGrid(self): # 격자 그리기 매소드
     # draw vertical lines
@@ -90,6 +93,12 @@ class Game():
     scoreRect.topleft = (Config.WINDOW_WIDTH - 120, 10)
     self.screen.blit(scoreSurf, scoreRect)
 
+  def drawHighScore(self):
+      scoreSurf = self.BASICFONT.render('High Score: %s' % (self.highscore), True, Config.ORANGE)
+      scoreRect = scoreSurf.get_rect()
+      scoreRect.topleft = (Config.WINDOW_WIDTH - 1180, 40)
+      self.screen.blit(scoreSurf, scoreRect)
+
   # 점수에 따른 라운드를 화면상에 표시해주는 함수
   def drawRound(self, score):
     if(score >= 0 and score < 3):
@@ -132,7 +141,13 @@ class Game():
       elif self.apple.getAppleDoubleDNum() == 1:
         self.drawDoubleDeleteApple()
       else:
-        self.drawApple() 
+          self.drawApple()
+
+    score = len(self.snake.wormCoords) - 3
+    self.drawScore(score)  # 뱀 몸통 -3으로 점수계
+    if score > self.highscore:
+        self.highscore = score
+    self.drawHighScore()
     
     self.drawScore(len(self.snake.wormCoords) - 3) # 뱀 몸통 -3으로 점수계
     self.drawRound(len(self.snake.wormCoords) - 3)
@@ -258,14 +273,57 @@ class Game():
         pygame.event.get()  # clear event queue
         return
 
+  def playAgain(self):
+      self.play_again = True
+
+  def quitGame(self):
+      self.quit_game = True
+
+  def displayGameOver(self):
+      gameOverFont = pygame.font.Font('freesansbold.ttf', 100)
+      gameSurf = gameOverFont.render('Game', True, Config.WHITE)
+      overSurf = gameOverFont.render('Over', True, Config.WHITE)
+      gameRect = gameSurf.get_rect()
+      overRect = overSurf.get_rect()
+      gameRect.midtop = (Config.WINDOW_WIDTH / 2, 10)
+      overRect.midtop = (Config.WINDOW_WIDTH / 2, gameRect.height + 10 + 25)
+      self.screen.blit(gameSurf, gameRect)
+      self.screen.blit(overSurf, overRect)
+
+      # self.button.rect.center = (self.screen_rect.centerx, 400)
+      rect = pygame.Rect(screen.get_rect().centerx - 100, 300, 200, 50)
+      play_again_btn = Control(pygame, screen, rect, 'Play Again', Config.O_YELLOW, self.playAgain)
+      rect.y = 400
+      quit_btn = Control(pygame, screen, rect, 'Quit', Config.GRAY, self.quitGame)
+
+      self.drawPressKeyMgs()
+      pygame.display.update()
+      pygame.time.wait(500)
+
+      self.checkForKeyPress()  # clear out any key presses in the event queue
+      self.play_again = False
+      self.quit_game = False
+      while not (self.play_again or self.quit_game):
+          play_again_btn.update()
+          quit_btn.update()
+          for event in pygame.event.get():
+              play_again_btn.button.check_event(event)
+              quit_btn.button.check_event(event)
+          if self.checkForKeyPress():
+              pygame.event.get()  # clear event queue
+              return
+          pygame.display.update()
+
   def run(self):
     self.menu()
     self.showStartScreen()
 
-    while True:
+    while not self.quit_game:
       self.gameLoop()
       self.displayGameOver()
-      self.menu()
+      if not self.play_again:
+          if not self.play_again:
+              self.menu()
       self.showStartScreen()
 
   def gameLoop(self):

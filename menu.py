@@ -52,7 +52,7 @@ class Menu:
         self.controls_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2,
                                       Config.WINDOW_HEIGHT / 2 + 150, self.btn_width, self.btn_height, text="Controls",
                                       text_size=70)
-        self.play_button.color = Config.GREEN
+        self.play_button.color = Config.LIGHTGREEN
         self.show_controls = False
 
     def message(self, text, text_size, color, position):

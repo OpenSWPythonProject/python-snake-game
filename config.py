@@ -16,17 +16,18 @@ class Config():
   WHITE = (255, 255, 255)
   BLACK = (0, 0, 0)
   RED = (255, 0, 0)
+  LIGHTGREEN = (182, 240, 159)
   GREEN = (0, 255, 0)
   ORANGE = (255, 94, 19)
   PURPLE = (128, 0, 128)
-  GOLD = (255, 215, 0)
   DARKRED = (139, 0, 0)
   DARKGREEN = (0, 155, 0)
   DARKGRAY = (40, 40, 40)
   DARKORANGE = (207, 83, 0)
   DARKPURPLE = (102, 0, 102)
-  DARKGOLD = (204, 172, 0)
   BG_COLOR = BLACK
+  GRAY = (158, 158, 158)
+  O_YELLOW = (253, 145, 40)
 
 
 screen = pygame.display.set_mode((Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT))
