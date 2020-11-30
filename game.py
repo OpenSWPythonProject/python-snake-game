@@ -7,6 +7,7 @@ from config import Config, screen
 from menu import Menu
 from pybutton import Control
 from snake import Snake
+from wallApple import WallApple
 
 
 class Game():
@@ -22,6 +23,7 @@ class Game():
     self.highscore = 0
     self.play_again = False
     self.quit_game = False
+    self.wallApple = WallApple()
 
   def drawGrid(self): # 격자 그리기 매소드
     # draw vertical lines
@@ -52,6 +54,17 @@ class Game():
     pygame.draw.rect(self.screen, Config.DARKRED, appleRect) # 파라미터: (윈도우객체, 색상, 사각형객체)
     appleInnerRect = pygame.Rect(x + 4, y + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8) # 안쪽 사각형 생성
     pygame.draw.rect(self.screen, Config.RED, appleInnerRect)
+
+  # 방해물 그리기.
+  def drawWallApple(self):
+      for i in range(self.wallApple.walCnt):
+          xx = self.wallApple.x[i] * Config.CELLSIZE
+          yy = self.wallApple.y[i] * Config.CELLSIZE
+          wappleRect = pygame.Rect(xx, yy, Config.CELLSIZE, Config.CELLSIZE)  # 사각형 객체를 생성하는 클래스 (x좌표,y좌표,너비,너비)
+          pygame.draw.rect(self.screen, Config.DARKRED, wappleRect)  # 파라미터: (윈도우객체, 색상, 사각형객체)
+          wappleInnerRect = pygame.Rect(xx + 4, yy + 4, Config.CELLSIZE - 8, Config.CELLSIZE - 8)  # 안쪽 사각형 생성
+          # 방해물 흰색으로 고정.
+          pygame.draw.rect(self.screen, Config.WHITE, wappleInnerRect)
 
   #먹으면 몸길이가 2개가 늘어나는 사과
   def drawDoubleApple(self):
@@ -116,9 +129,11 @@ class Game():
 
   def draw(self): # 렌더링 메소드
     self.screen.fill(Config.BG_COLOR) #배경색
-    # in here well draw snake, grid, apple, scroe
+    # in here well draw snake, grid, apple, score
     self.drawGrid()
     self.drawWorm()
+    self.drawWallApple()
+
     if self.round == 0: # 0라운드일 땐 기본 아이템만
       self.drawApple()
     elif self.round == 1: # 1라운드일 땐 일반 사과와 doubleApple 아이템만
@@ -142,6 +157,26 @@ class Game():
         self.drawDoubleDeleteApple()
       else:
           self.drawApple()
+
+    # 방해물 사과가 실제 사과와 같은 위치일 경우 위치 재설정.
+    for i in range(self.wallApple.walCnt):
+        if (self.wallApple.x[i] == self.apple.x and self.wallApple.y[i] == self.apple.y):
+            self.apple.setNewLocation()
+            i = 0
+    if (len(self.snake.wormCoords) - 3) >= 3 and (len(self.snake.wormCoords) - 3) <= 5:
+        if self.apple.getAppleNum() == 1:
+            self.drawDoubleApple()
+        else:
+            self.drawApple()
+    elif (len(self.snake.wormCoords) - 3) > 5 and (len(self.snake.wormCoords) - 3) <= 8:
+        if self.apple.getAppleNum == 1:
+            self.drawDoubleApple()
+        elif self.apple.getAppleDNum() == 1:
+            self.drawDeleteApple()
+        else:
+            self.drawApple()
+    else:
+        self.drawApple()
 
     score = len(self.snake.wormCoords) - 3
     self.drawScore(score)  # 뱀 몸통 -3으로 점수계
@@ -182,8 +217,12 @@ class Game():
   def resetGame(self):
     del self.snake
     del self.apple
+    del self.wallApple
+
     self.snake = Snake()
     self.apple = Apple()
+    self.wallApple = WallApple()
+
     self.round = 0
     return True
 
@@ -335,7 +374,7 @@ class Game():
         elif event.type == pygame.KEYDOWN:
           self.handleKeyEvents(event)
 
-      self.snake.update(self.apple)
+      self.snake.update(self.apple, self.wallApple)
       self.draw()
       if self.isGameOver():
         break

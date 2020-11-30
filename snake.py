@@ -1,5 +1,6 @@
-from config import Config
 import random
+
+from config import Config
 
 
 class Snake():
@@ -23,32 +24,43 @@ class Snake():
     ]
     self.TAIL = len(self.wormCoords)-1
 
-  def update(self, apple):
+  def update(self, apple, wallapple):
     # check if snake has eaten an apply 뱀의 위치 업데이트 메소드
     if self.wormCoords[self.HEAD]['x'] == apple.x and self.wormCoords[self.HEAD]['y'] == apple.y:   #뱀의 머리의 x좌표와 y좌표와 사과의 x좌표와 y좌표가 같을 경우, 즉 머리가 사과를 먹었을 경우
       if apple.getAppleColor().__eq__(Config.RED): # 먹은 사과 아이템이 일반 사과일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
+        wallapple.setNewLocation(self)
         self.DefaultUpdate()
       elif apple.getAppleColor().__eq__(Config.ORANGE): # 먹은 사과 아이템이 더블 아이템일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
-        self.doubleUpdate(apple) # 몸길이를 2배 증가시켜주는 함수
+        wallapple.setNewLocation(self)  # 방해물 사과를 새로운 장소에 생성
+        self.doubleUpdate()  # 몸길이를 2배 증가시켜주는 함수
       elif apple.getAppleColor().__eq__(Config.PURPLE): # 먹은 사과 아이템이 delete 아이템일 경우
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
+        wallapple.setNewLocation(self)  # 방해물 사과를 새로운 장소에 생성
         self.deleteUpdate()
       else:
         apple.setNewLocation(self)    # 사과를 새로운 장소에 생성
         apple.setAppleNum()
         apple.setAppleDNum()
+        wallapple.setNewLocation(self)  # 방해물 사과를 새로운 장소에 생성
         self.DoubledeleteUpdate()
     else:
       self.DefaultUpdate()
       self.deleteUpdate()  # remove worms tail segment # 뱀의 꼬리부분을 삭제
+
+    # 뱀의 머리가 # 방해물 사과와 같을 경우 게임 종료.
+    for i in range(wallapple.walCnt):
+        if self.wormCoords[self.HEAD]['x'] == wallapple.x[i] and self.wormCoords[self.HEAD]['y'] == wallapple.y[i]:
+            self.wormCoords[self.HEAD]['x'] = -1
+            self.wormCoords[self.HEAD]['y'] = -1
+            return
 
 
   def DefaultUpdate(self):
@@ -68,7 +80,7 @@ class Snake():
                 'y': self.wormCoords[self.HEAD]['y']}
     self.wormCoords.insert(0, newHead) # 뱀의 몸통 리스트 첫번째에 새로운 머리를 insert
 
-  def doubleUpdate(self, apple):
+  def doubleUpdate(self):
     if self.direction == self.UP:
       newNext = {'x': self.wormCoords[self.HEAD]['x'],
                  'y': self.wormCoords[self.HEAD]['y'] - 1}
