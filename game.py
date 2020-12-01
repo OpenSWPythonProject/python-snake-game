@@ -5,6 +5,7 @@ import pygame
 from apple import Apple
 from config import Config, screen
 from menu import Menu
+from music import Music
 from pybutton import Control
 from snake import Snake
 from wallApple import WallApple
@@ -24,6 +25,7 @@ class Game():
     self.play_again = False
     self.quit_game = False
     self.wallApple = WallApple()
+    self.music = Music()
 
   def drawGrid(self): # 격자 그리기 매소드
     # draw vertical lines
@@ -261,6 +263,7 @@ class Game():
       # screen.blit(back, (0,0))
       main_menu.render()
       pygame.display.update()
+      pygame.display.update()
 
 
   def showStartScreen(self):
@@ -355,7 +358,9 @@ class Game():
           pygame.display.update()
 
   def run(self):
+      self.music.playTheme()
     self.menu()
+      self.music.playInGameMusic()
     self.showStartScreen()
 
     while not self.quit_game:
@@ -363,7 +368,9 @@ class Game():
       self.displayGameOver()
       if not self.play_again:
           if not self.play_again:
+              self.music.playTheme()
               self.menu()
+      self.music.playInGameMusic()
       self.showStartScreen()
 
   def gameLoop(self):

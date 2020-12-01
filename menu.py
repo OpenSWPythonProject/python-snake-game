@@ -33,8 +33,8 @@ class Button:
     def render(self):
         pygame.draw.rect(self.window, self.color, self.rect)
         text = self.font.render(self.text, True, self.text_color)
-        x = self.x + 20
-        y = self.y + 45
+        x = self.x
+        y = self.y + 25
         self.window.blit(text, (x, y))
 
 
@@ -48,10 +48,10 @@ class Menu:
         self.btn_width = 250
         self.btn_height = 125
         self.play_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2, Config.WINDOW_HEIGHT / 2,
-                                  self.btn_width, self.btn_height, text='Single Player', text_size=47)
+                                  self.btn_width, self.btn_height, text='Single Player', text_size=41)
         self.music_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2,
-                                   Config.WINDOW_HEIGHT / 2 + 150, self.btn_width, self.btn_height, text="Music Off",
-                                   text_size=70)
+                                   Config.WINDOW_HEIGHT / 2 + 150, self.btn_width, self.btn_height, text="  Music Off",
+                                   text_size=41)
         self.play_button.color = Config.LIGHTGREEN
         self.show_music = False
 
