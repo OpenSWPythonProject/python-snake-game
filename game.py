@@ -38,8 +38,8 @@ class Game():
   def drawWorm(self):
       body = pygame.image.load('res/greenCircle.jpg')
       body = pygame.transform.scale(body, (Config.CELLSIZE, Config.CELLSIZE))
-      rect = body.get_rect()
       for coord in self.snake.wormCoords:  # 뱀 객체 리스
+          rect = body.get_rect()
           x = coord['x'] * Config.CELLSIZE
           y = coord['y'] * Config.CELLSIZE
           rect = rect.move((x, y))
