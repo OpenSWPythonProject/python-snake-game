@@ -60,10 +60,10 @@ class Game():
 
   # 방해물 그리기.
   def drawWallApple(self):
-      poisonApple = pygame.image.load('res/poison.jpg')
+      poisonApple = pygame.image.load('res/poison.png')
       poisonApple = pygame.transform.scale(poisonApple, (Config.CELLSIZE, Config.CELLSIZE))
-      rect = poisonApple.get_rect()
       for i in range(self.wallApple.walCnt):
+          rect = poisonApple.get_rect()
           xx = self.wallApple.x[i] * Config.CELLSIZE
           yy = self.wallApple.y[i] * Config.CELLSIZE
           rect = rect.move((xx, yy))
@@ -72,13 +72,13 @@ class Game():
   #먹으면 몸길이가 2개가 늘어나는 사과
   def drawDoubleApple(self):
     # print("두배 사과 그리기")
-    goldApple = pygame.image.load('res/gold.png')
-    goldApple = pygame.transform.scale(goldApple, (Config.CELLSIZE, Config.CELLSIZE))
-    rect = goldApple.get_rect()
+    blueApple = pygame.image.load('res/blue.png')
+    blueApple = pygame.transform.scale(blueApple, (Config.CELLSIZE, Config.CELLSIZE))
+    rect = blueApple.get_rect()
     x = self.apple.x * Config.CELLSIZE
     y = self.apple.y * Config.CELLSIZE
     rect = rect.move((x, y))
-    screen.blit(goldApple, rect)
+    screen.blit(blueApple, rect)
 
   #먹으면 몸길이가 1개 줄어드는 사과(사용자에겐 이득이 되는 아이템)
   def drawDeleteApple(self):
@@ -92,13 +92,13 @@ class Game():
 
   #먹으면 몸길이가 2개 줄어드는 사과(사용자에겐 이득이 되는 아이템2)
   def drawDoubleDeleteApple(self):
-      blueApple = pygame.image.load('res/blue.png')
-      blueApple = pygame.transform.scale(blueApple, (Config.CELLSIZE, Config.CELLSIZE))
-      rect = blueApple.get_rect()
+      goldApple = pygame.image.load('res/gold.png')
+      goldApple = pygame.transform.scale(goldApple, (Config.CELLSIZE, Config.CELLSIZE))
+      rect = goldApple.get_rect()
       x = self.apple.x * Config.CELLSIZE
       y = self.apple.y * Config.CELLSIZE
       rect = rect.move((x, y))
-      screen.blit(blueApple, rect)
+      screen.blit(goldApple, rect)
 
   # 점수를 화면에 표시해줌 
   def drawScore(self, score):

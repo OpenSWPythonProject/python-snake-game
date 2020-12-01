@@ -49,11 +49,11 @@ class Menu:
         self.btn_height = 125
         self.play_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2, Config.WINDOW_HEIGHT / 2,
                                   self.btn_width, self.btn_height, text='Single Player', text_size=47)
-        self.controls_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2,
-                                      Config.WINDOW_HEIGHT / 2 + 150, self.btn_width, self.btn_height, text="Controls",
-                                      text_size=70)
+        self.music_button = Button(screen, Config.WINDOW_WIDTH / 2 - self.btn_width / 2,
+                                   Config.WINDOW_HEIGHT / 2 + 150, self.btn_width, self.btn_height, text="Music Off",
+                                   text_size=70)
         self.play_button.color = Config.LIGHTGREEN
-        self.show_controls = False
+        self.show_music = False
 
     def message(self, text, text_size, color, height):
         font = pygame.font.SysFont('Comic Sans MS', text_size)
@@ -72,19 +72,19 @@ class Menu:
         if self.play_button.clicked():
             self.running = False
 
-        if self.controls_button.clicked():
-            if self.show_controls:
-                self.show_controls = False
-            if self.show_controls == False:
-                self.show_controls = True
+        if self.music_button.clicked():
+            if self.show_music:
+                self.show_music = False
+            if self.show_music == False:
+                self.show_music = True
 
     def render(self):
         self.message("Welcome to", self.title_size - 10, (0, 0, 0), self.title_height - 100)
         self.message("Snake Game", self.title_size, self.title_color, self.title_height)
 
         self.play_button.render()
-        self.controls_button.render()
+        self.music_button.render()
 
-        if self.show_controls:
+        if self.show_music:
             self.message("Single Player: Arrow keys", 30, (255, 255, 255),
                          (Config.WINDOW_WIDTH / 2 - 500, Config.WINDOW_HEIGHT / 2))
