@@ -57,6 +57,7 @@ class Game():
     y = self.apple.y * Config.CELLSIZE
     rect = rect.move((x, y))
     screen.blit(redApple, rect)
+    self.apple.setAppleColor(Config.RED)
 
 
 
@@ -168,6 +169,7 @@ class Game():
     for i in range(self.wallApple.walCnt):
         if (self.wallApple.x[i] == self.apple.x and self.wallApple.y[i] == self.apple.y):
             self.apple.setNewLocation()
+            i = 0
 
 
 
