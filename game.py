@@ -248,6 +248,8 @@ class Game():
           global running
           main_menu.running = False
           running = False
+          pygame.quit()
+          sys.exit()
 
       main_menu.logic()
       # back = pygame.image.load("../back.png")
@@ -268,6 +270,9 @@ class Game():
       for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
           return
+        elif event.type == pygame.QUIT:
+          pygame.quit()
+          sys.exit()
       self.screen.fill(Config.BG_COLOR)
 
       rotatedSurf1 = pygame.transform.rotate(titleSurf1, degrees1)

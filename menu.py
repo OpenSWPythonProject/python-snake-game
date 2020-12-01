@@ -74,7 +74,7 @@ class Menu:
         self.message("Welcome to", self.title_size - 10, (0, 0, 0), self.title_height - 100)
         self.message("Snake Game", self.title_size, self.title_color, self.title_height)
 
-        self.message("Made by Team11, OpenSW", self.title_size - 50, Config.DARKGRAY, self.title_height*2.1)
+        self.message("Exit : SpaceBar", self.title_size - 50, Config.DARKGRAY, self.title_height*2.1)
         self.play_button.render()
 
 
