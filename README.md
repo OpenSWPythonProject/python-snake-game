@@ -1,9 +1,10 @@
-# Mini Project: Snake Game
+# 공개SW실무 : 프로젝트 스네이크 
 
-### Tech-Stack
+### Tech-Stack (Dependencies)
 
 - Python
 - pygame
+- pygame_button
 
 ### After this project
 
