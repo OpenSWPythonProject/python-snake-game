@@ -17,6 +17,11 @@ DeleteApple 아이템 (보라색 사과)
 DoubleDeleteApple 아이템 (금색 사과)
 - 3라운드 이후부터 14.8%의 확률로 등장, 습득 시 몸길이 2 감소
 
+wallapple (갈색 = 썩은 사과)
+- 플레이어(snake)의 머리(HEAD)가 wallapple에 닿으면 게임오버로 판단 됨
+   (isGameOver() 함수가 이를 판단)
+- apple을 먹으면 1~3개에 랜덤한 개수의 wallapple이 랜덤한 위치에 생성
+
 
 
 ### Screenshot
