@@ -81,6 +81,7 @@ class Game():
     y = self.apple.y * Config.CELLSIZE
     rect = rect.move((x, y))
     screen.blit(blueApple, rect)
+    self.apple.setAppleColor(Config.ORANGE)
 
   #먹으면 몸길이가 1개 줄어드는 사과(사용자에겐 이득이 되는 아이템)
   def drawDeleteApple(self):
@@ -91,6 +92,7 @@ class Game():
       y = self.apple.y * Config.CELLSIZE
       rect = rect.move((x, y))
       screen.blit(purpleApple, rect)
+      self.apple.setAppleColor(Config.PURPLE)
 
   #먹으면 몸길이가 2개 줄어드는 사과(사용자에겐 이득이 되는 아이템2)
   def drawDoubleDeleteApple(self):
@@ -101,8 +103,9 @@ class Game():
       y = self.apple.y * Config.CELLSIZE
       rect = rect.move((x, y))
       screen.blit(goldApple, rect)
+      self.apple.setAppleColor(Config.GOLD)
 
-  # 점수를 화면에 표시해줌 
+  # 점수를 화면에 표시해줌
   def drawScore(self, score):
     scoreSurf = self.BASICFONT.render('Score: %s' % (score), True, Config.WHITE) # 윈도우 위에 새로운 표면에 텍스트 렌더 (텍스트, 안티얼라이싱, 색, 백그라운드)
     scoreRect = scoreSurf.get_rect() # 렌더된 텍스트의 사이즈와 오프셋 리턴
@@ -165,21 +168,8 @@ class Game():
     for i in range(self.wallApple.walCnt):
         if (self.wallApple.x[i] == self.apple.x and self.wallApple.y[i] == self.apple.y):
             self.apple.setNewLocation()
-            i = 0
-    if (len(self.snake.wormCoords) - 3) >= 3 and (len(self.snake.wormCoords) - 3) <= 5:
-        if self.apple.getAppleNum() == 1:
-            self.drawDoubleApple()
-        else:
-            self.drawApple()
-    elif (len(self.snake.wormCoords) - 3) > 5 and (len(self.snake.wormCoords) - 3) <= 8:
-        if self.apple.getAppleNum == 1:
-            self.drawDoubleApple()
-        elif self.apple.getAppleDNum() == 1:
-            self.drawDeleteApple()
-        else:
-            self.drawApple()
-    else:
-        self.drawApple()
+
+
 
     score = len(self.snake.wormCoords) - 3
     self.drawScore(score)  # 뱀 몸통 -3으로 점수계

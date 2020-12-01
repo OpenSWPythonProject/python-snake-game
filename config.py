@@ -28,6 +28,7 @@ class Config():
   BG_COLOR = BLACK
   GRAY = (158, 158, 158)
   O_YELLOW = (253, 145, 40)
+  GOLD = (255, 215, 0)
 
 
 screen = pygame.display.set_mode((Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT))
