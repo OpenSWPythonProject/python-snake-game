@@ -359,13 +359,13 @@ class Game():
 
   def run(self):
       self.music.playTheme()
-    self.menu()
+      self.menu()
       self.music.playInGameMusic()
-    self.showStartScreen()
+      self.showStartScreen()
 
-    while not self.quit_game:
-      self.gameLoop()
-      self.displayGameOver()
+      while not self.quit_game:
+        self.gameLoop()
+        self.displayGameOver()
       if not self.play_again:
           if not self.play_again:
               self.music.playTheme()
