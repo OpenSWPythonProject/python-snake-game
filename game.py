@@ -156,14 +156,14 @@ class Game():
       else:
         self.drawApple()
     else: # 3라운드 이상 부터는 전부 다 등장
-      if self.apple.getAppleNum() == 1:
-        self.drawDoubleApple()
-      elif self.apple.getAppleDNum() == 1:
-        self.drawDeleteApple()
-      elif self.apple.getAppleDoubleDNum() == 1:
+      # if self.apple.getAppleNum() == 1:
+      #   self.drawDoubleApple()
+      # elif self.apple.getAppleDNum() == 1:
+      #   self.drawDeleteApple()
+      # elif self.apple.getAppleDoubleDNum() == 1:
         self.drawDoubleDeleteApple()
-      else:
-          self.drawApple()
+      # else:
+      #     self.drawApple()
 
     # 방해물 사과가 실제 사과와 같은 위치일 경우 위치 재설정.
     for i in range(self.wallApple.walCnt):
@@ -352,6 +352,9 @@ class Game():
           if self.checkForKeyPress():
               pygame.event.get()  # clear event queue
               return
+          if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
           pygame.display.update()
 
   def run(self):
