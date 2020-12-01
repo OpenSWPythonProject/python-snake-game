@@ -349,12 +349,12 @@ class Game():
           for event in pygame.event.get():
               play_again_btn.button.check_event(event)
               quit_btn.button.check_event(event)
+              if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
           if self.checkForKeyPress():
               pygame.event.get()  # clear event queue
               return
-          if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
           pygame.display.update()
 
   def run(self):
