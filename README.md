@@ -19,7 +19,6 @@ DoubleDeleteApple 아이템 (금색 사과)
 
 wallapple (갈색 = 썩은 사과)
 - 플레이어(snake)의 머리(HEAD)가 wallapple에 닿으면 게임오버로 판단 됨
-   (isGameOver() 함수가 이를 판단)
 - apple을 먹으면 1~3개에 랜덤한 개수의 wallapple이 랜덤한 위치에 생성
 
 
